@@ -1,4 +1,3 @@
-========================
 This is a demo/sample standalone app that uses Spring Boot and the visualCaptcha AngularJS bower package as a proof-of-concept for how to integrate with REST Services based on Spring / Java.
 
 Runs as a standalone application with Spring Boot so all you need to do is run `mvn spring-boot:run` and point your browser to http://localhost:8080. Most recent version also adds docker support.
