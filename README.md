@@ -1,19 +1,12 @@
-visualCaptcha-java-rest [![Build Status](https://travis-ci.org/tillkuhn/visualCaptcha-java-rest.svg?branch=master)](https://travis-ci.org/tillkuhn/visualCaptcha-java-rest) [![Coverage Status](https://coveralls.io/repos/tillkuhn/visualCaptcha-java-rest/badge.svg)](https://coveralls.io/r/tillkuhn/visualCaptcha-java-rest)
 ========================
 This is a demo/sample standalone app that uses Spring Boot and the visualCaptcha AngularJS bower package as a proof-of-concept for how to integrate with REST Services based on Spring / Java.
 
-It's forked out of bdotzour's [visualCaptcha-java](https://github.com/bdotzour/visualCaptcha-java) project (Plain Java Servlet backend for visualCaptcha) using Spring RestController as opposed to Servlets.
-
 Runs as a standalone application with Spring Boot so all you need to do is run `mvn spring-boot:run` and point your browser to http://localhost:8080. Most recent version also adds docker support.
-
-## Homepage
-
- * http://tillkuhn.github.io/visualCaptcha-java-rest
 
 ## Installation
 
 ```
-git clone https://github.com/tillkuhn/visualCaptcha-java-rest.git
+git clone https://github.com/denis554/visualCaptcha-java-rest.git
 mvn verify
 ```
 
