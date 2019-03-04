@@ -1,0 +1,9 @@
+*.log
+*.bat
+*.iml
+
+.idea
+.vagrant
+
+target
+visualCaptcha-java.iml

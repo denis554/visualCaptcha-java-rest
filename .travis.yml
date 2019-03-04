@@ -1,0 +1,9 @@
+language: java
+jdk:
+  - oraclejdk7
+## build only master branch
+branches:
+  only:
+    - master
+## run unit AND integration tests
+script: "mvn verify"

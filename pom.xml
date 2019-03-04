@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- RUN WITH mvn spring-boot:run -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- run  mvn package && java -jar target/visualCaptcha-java-rest-0.1.jar -->
+    <groupId>com.kuhniverse.captcha</groupId>
+    <artifactId>visualCaptcha-java-rest</artifactId>
+    <!--<name>${project.artifactId}</name> -->
+    <description>Visual Captcha Implementation using Spring based Rest Services</description>
+    <version>0.2</version>
+    <packaging>jar</packaging>
+    <url>https://github.com/tillkuhn/visualCaptcha-java-res</url>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.2.3.RELEASE</version>
+    </parent>
+
+    <properties>
+        <java.version>1.7</java.version>
+        <mockito.version>1.9.5</mockito.version>
+        <junit.version>4.11</junit.version>
+        <spring.version>4.1.6.RELEASE</spring.version>
+        <docker.image.prefix>captcha</docker.image.prefix>
+        <maven.surefire.version>2.17</maven.surefire.version>
+        <maven.failsafe.version>2.17</maven.failsafe.version>
+        <maven.surefire.include>com/kuhniverse/ut/**/*.java</maven.surefire.include>
+        <maven.failsafe.include>com/kuhniverse/it/**/*.java</maven.failsafe.include>
+    </properties>
+
+    <ciManagement>
+        <system>Travis-CI</system>
+        <url>https://travis-ci.org/tillkuhn/visualCaptcha-java-rest</url>
+    </ciManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.7</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+        </dependency>
+
+        <!-- test -->
+        <!-- Dependencies only for testing -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <!-- Configure failsafe plugin for Integration  -->
+            <!-- SEE ALSO PROFILE SPECIFIC CONFIGURATION_ERROR FOR coverafe !!! -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven.failsafe.version}</version>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>verify</id>
+                        <goals>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <!-- for elements see http://maven.apache.org/surefire/maven-failsafe-plugin/integration-test-mojo.html -->
+                <configuration>
+                    <!-- all it it packacke -->
+                    <includes>
+                        <include>${maven.failsafe.include}</include>
+                    </includes>
+                    <!--
+                    <destFile>${sonar.jacoco.itReportPath}</destFile>
+                    <forkCount>1</forkCount>
+                    <forkedProcessTimeoutInSeconds>1200</forkedProcessTimeoutInSeconds>
+                    <argLine>-XX:MaxPermSize=128m -Xmx256m</argLine>
+                    -->
+                    <!-- Force alphabetical order to have a reproducible build -->
+                    <runOrder>alphabetical</runOrder>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.version}</version>
+                <configuration>
+                    <includes>
+                        <include>${maven.surefire.include}</include>
+                    </includes>
+                    <skipTests>true</skipTests>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <skipTests>false</skipTests>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <finalName>${project.artifactId}-final</finalName>
+                </configuration>
+            </plugin>
+            -->
+        </plugins>
+    </build>
+
+
+    <repositories>
+        <repository>
+            <id>spring-releases</id>
+            <url>https://repo.spring.io/libs-release</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-releases</id>
+            <url>https://repo.spring.io/libs-release</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+</project>
